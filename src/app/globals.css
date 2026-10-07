@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: 242 244 246;
+  --surface: 255 255 255;
+  --ink: 16 28 46;
+  --muted: 85 98 122;
+  --line: 213 219 227;
+  --signal: 11 122 117;
+  --mark: 199 125 0;
+}
+
+.dark {
+  --paper: 11 18 32;
+  --surface: 17 26 44;
+  --ink: 231 236 244;
+  --muted: 147 160 184;
+  --line: 34 48 74;
+  --signal: 60 199 189;
+  --mark: 240 181 74;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  @apply bg-paper font-sans text-ink antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--signal));
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* The one orchestrated motion: result bars draw in on page load. */
+@keyframes draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.bar {
+  transform-origin: left;
+  animation: draw 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .bar { animation: none; }
+  * { transition-duration: 0.01ms !important; }
+}
